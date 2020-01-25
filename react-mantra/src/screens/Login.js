@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import axios from 'axios';
 
 class Login extends React.PureComponent {
 	constructor(props) {
@@ -22,8 +23,16 @@ class Login extends React.PureComponent {
 	}
 
 	handleSubmit = event => {
-		console.log(this.state.email + " " + this.state.password);
 	    event.preventDefault();
+
+	 	axios.post('http://localhost:8085/oauth/token?grant_type=password&username='+this.state.email+'&password='+this.state.password, {}, 
+	 		{headers:{Authorization: "Basic bXktdHJ1c3RlZC1jbGllbnQ6c2VjcmV0"}})
+		.then(function (response) {
+		    console.log(response);
+		})
+		.catch(function (error) {
+		    console.log(error);
+		});
 	}
 
 	render(){
